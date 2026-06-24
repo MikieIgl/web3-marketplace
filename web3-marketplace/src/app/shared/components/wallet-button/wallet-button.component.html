@@ -1,0 +1,18 @@
+@if (!walletService.isConnected()) {
+  <button class="btn connect-btn" (click)="connect()">Connect</button>
+} @else {
+  <div class="wallet-dropdown">
+    <button class="btn connected-btn" (click)="toggleMenu()">
+      {{ walletService.address() | slice: 0 : 6 }}...{{ walletService.address() | slice: -4 }}
+      <span class="dropdown-arrow">▼</span>
+    </button>
+    @if (menuOpen) {
+      <div class="dropdown-menu">
+        <div class="menu-header">Wallet Connected</div>
+        <button class="menu-item" (click)="switchAccount()">Switch Account</button>
+        <button class="menu-item" (click)="copyAddress()">Copy Address</button>
+        <button class="menu-item" (click)="disconnect()">Disconnect</button>
+      </div>
+    }
+  </div>
+}

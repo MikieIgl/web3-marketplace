@@ -1,0 +1,106 @@
+<div class="marketplace fade-in">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading amazing items...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <span class="error-icon">!</span>
+      <p>{{ error() }}</p>
+      <button class="btn btn-dark" (click)="loadProducts()">Try Again</button>
+    </div>
+  } @else if (displayProducts().length === 0) {
+    <div class="empty-state">
+      <span class="empty-icon">📦</span>
+      <h2>No items yet</h2>
+      <p>Be the first to list an item!</p>
+      <button class="btn btn-dark" routerLink="/sell">List Your Item</button>
+    </div>
+  } @else {
+    <div class="products-grid">
+      @for (product of displayProducts(); track product.id) {
+        <div class="product-card fade-in">
+          <a [routerLink]="['/product', product.id]" class="card-link">
+            <div class="card-image-wrapper">
+              <img [src]="product.imageUrl" [alt]="product.name" />
+              <div class="status-badge" [class.sold]="product.sold">
+                {{ product.sold ? 'SOLD' : 'AVAILABLE' }}
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <span class="product-id">#{{ product.id }}</span>
+              </div>
+              <p class="product-description">{{ product.description }}</p>
+              <div class="card-divider"></div>
+              <div class="card-footer">
+                <div class="price-info">
+                  <span class="price-label">Price</span>
+                  <div class="price-value">{{ formatPrice(product.price) }} ETH</div>
+                </div>
+                @if (product.sold) {
+                  <button class="btn btn-buy" disabled>Sold Out</button>
+                } @else if (buyingProductId() === product.id) {
+                  <button class="btn btn-buy" disabled>
+                    <span class="spinner-small"></span>
+                    Processing...
+                  </button>
+                } @else if (!walletService.isConnected()) {
+                  <button
+                    class="btn btn-buy"
+                    (click)="connectWallet(); $event.preventDefault(); $event.stopPropagation()"
+                  >
+                    Connect to Buy
+                  </button>
+                } @else {
+                  <button
+                    class="btn btn-buy"
+                    (click)="buyItem(product); $event.preventDefault(); $event.stopPropagation()"
+                  >
+                    Buy Now
+                  </button>
+                }
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="pagination">
+        <button
+          class="btn btn-page"
+          [class.disabled]="currentPage() === 1"
+          (click)="prevPage()"
+          [disabled]="currentPage() === 1"
+        >
+          ← Previous
+        </button>
+
+        <div class="page-numbers">
+          @for (page of pageNumbers(); track page) {
+            <button
+              class="btn btn-page-number"
+              [class.active]="currentPage() === page"
+              (click)="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+          }
+        </div>
+
+        <button
+          class="btn btn-page"
+          [class.disabled]="currentPage() === totalPages()"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next →
+        </button>
+      </div>
+    }
+  }
+</div>

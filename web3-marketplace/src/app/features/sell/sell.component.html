@@ -1,0 +1,170 @@
+<div class="sell-page fade-in">
+  <div class="page-header">
+    <h1>List Item for Sale</h1>
+    <p class="page-description">Create a new listing on the marketplace</p>
+  </div>
+
+  <div class="sell-container">
+    @if (!walletService.isConnected()) {
+      <div class="connect-prompt">
+        <h2>Connect Wallet First</h2>
+        <p>Please connect your MetaMask wallet to list an item</p>
+        <button class="btn btn-dark" (click)="connectWallet()">Connect Wallet</button>
+      </div>
+    } @else {
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="sell-form">
+        <div class="form-layout">
+          <div class="form-main">
+            <div class="form-group">
+              <label for="name">Item Name</label>
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter item name"
+                class="form-input"
+              />
+              @if (itemForm.get('name')?.invalid && itemForm.get('name')?.touched) {
+                <span class="error-message">Item name is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                rows="4"
+                placeholder="Describe your item..."
+                class="form-input"
+              ></textarea>
+              @if (itemForm.get('description')?.invalid && itemForm.get('description')?.touched) {
+                <span class="error-message">Description is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="price">Price (ETH)</label>
+              <input
+                id="price"
+                type="number"
+                formControlName="price"
+                step="0.0001"
+                min="0.0001"
+                placeholder="0.001"
+                class="form-input"
+              />
+              @if (itemForm.get('price')?.invalid && itemForm.get('price')?.touched) {
+                <span class="error-message">Valid price is required (min 0.0001 ETH)</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Image</label>
+              <div class="image-upload-tabs">
+                <button
+                  type="button"
+                  class="tab-btn"
+                  [class.active]="imageMode === 'url'"
+                  (click)="setImageMode('url')"
+                >
+                  URL
+                </button>
+                <button
+                  type="button"
+                  class="tab-btn"
+                  [class.active]="imageMode === 'file'"
+                  (click)="setImageMode('file')"
+                >
+                  Upload File
+                </button>
+              </div>
+
+              @if (imageMode === 'url') {
+                <input
+                  id="imageUrl"
+                  type="url"
+                  formControlName="imageUrl"
+                  placeholder="https://example.com/image.png"
+                  class="form-input"
+                />
+                @if (
+                  itemForm.get('imageUrl')?.hasError('required') &&
+                  itemForm.get('imageUrl')?.touched
+                ) {
+                  <span class="error-message">Image URL is required</span>
+                }
+                @if (
+                  itemForm.get('imageUrl')?.hasError('url') && itemForm.get('imageUrl')?.touched
+                ) {
+                  <span class="error-message">Please enter a valid URL</span>
+                }
+              } @else {
+                <div class="file-upload-area" [class.has-file]="selectedFile !== null">
+                  <input
+                    id="imageFile"
+                    type="file"
+                    accept="image/*"
+                    (change)="onFileSelected($event)"
+                    class="file-input"
+                  />
+                  <label for="imageFile" class="file-label">
+                    @if (selectedFile) {
+                      <span class="file-name">{{ selectedFile.name }}</span>
+                    } @else {
+                      <span class="file-placeholder">
+                        <span class="file-icon">📁</span>
+                        <span>Click to select an image</span>
+                        <span class="file-hint">PNG, JPG, GIF up to 5MB</span>
+                      </span>
+                    }
+                  </label>
+                </div>
+                @if (imageError) {
+                  <span class="error-message">{{ imageError }}</span>
+                }
+              }
+            </div>
+          </div>
+
+          <div class="form-preview">
+            <div class="preview-card">
+              <h3>Preview</h3>
+              @if (previewUrl) {
+                <div class="preview-image">
+                  <img [src]="previewUrl" alt="Preview" />
+                </div>
+              } @else {
+                <div class="preview-placeholder">
+                  <p>Image preview will appear here</p>
+                </div>
+              }
+              <div class="preview-info">
+                <h4>{{ itemForm.get('name')?.value || 'Item Name' }}</h4>
+                <p>{{ itemForm.get('description')?.value || 'Description will appear here' }}</p>
+                <div class="preview-price">{{ itemForm.get('price')?.value || '0.00' }} ETH</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (error) {
+          <div class="form-error">
+            {{ error }}
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-dark" [class.disabled]="itemForm.invalid || loading">
+            @if (loading) {
+              <span class="spinner-small"></span> Listing...
+            } @else {
+              List Item
+            }
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

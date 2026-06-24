@@ -1,0 +1,56 @@
+<div class="sold-page fade-in">
+  @if (walletNotConnected()) {
+    <div class="connect-prompt">
+      <h2>Connect Wallet First</h2>
+      <p>Please connect your MetaMask wallet to view your sold items</p>
+      <button class="btn btn-dark" (click)="connectWallet()">Connect Wallet</button>
+    </div>
+  } @else {
+    <div class="sold-header">
+      <h1>Sold Items</h1>
+      <p>Items you've sold to other collectors</p>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading your sold items...</p>
+      </div>
+    } @else if (displayItems().length === 0) {
+      <div class="empty-state">
+        <h2>No sales yet</h2>
+        <p>List an item and make your first sale!</p>
+        <button class="btn btn-dark" routerLink="/sell">Create Item</button>
+      </div>
+    } @else {
+      <div class="sold-stats">
+        <div class="stat-item">
+          <span class="stat-value">{{ displayItems().length }}</span>
+          <span class="stat-label">Items Sold</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">Ξ {{ totalEarned() }}</span>
+          <span class="stat-label">Total Earned</span>
+        </div>
+      </div>
+
+      <div class="items-grid">
+        @for (item of displayItems(); track item.id) {
+          <div class="item-card" [routerLink]="['/product', item.id]">
+            <div class="item-image">
+              <img [src]="item.imageUrl" [alt]="item.name" />
+            </div>
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
+              <p class="item-desc">{{ item.description }}</p>
+              <div class="item-meta">
+                <span class="item-id">#{{ item.id }}</span>
+                <span class="item-price">{{ formatPrice(item.price) }} ETH</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

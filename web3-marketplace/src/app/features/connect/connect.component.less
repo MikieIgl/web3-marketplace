@@ -1,0 +1,73 @@
+.connect-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.connect-card {
+  background: var(--apple-card-bg);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--apple-gray-900);
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: var(--apple-gray-500);
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.feature {
+  padding: 20px;
+  background: var(--apple-gray-50);
+  border-radius: var(--radius-md);
+  text-align: center;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 12px 0 4px;
+    color: var(--apple-gray-900);
+  }
+
+  p {
+    font-size: 12px;
+    color: var(--apple-gray-500);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.card-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+
+  .btn {
+    min-width: 160px;
+  }
+
+  .browse-button {
+    min-width: auto;
+  }
+}

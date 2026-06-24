@@ -1,0 +1,246 @@
+.my-items-page {
+  max-width: 1104px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--apple-gray-900);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--apple-gray-500);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.connect-prompt,
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  background: var(--apple-card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.connect-prompt {
+  h2 {
+    margin: 0 0 8px;
+    color: var(--apple-gray-900);
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--apple-gray-500);
+    font-size: 15px;
+    margin: 0 0 24px;
+  }
+}
+
+.loading-state .spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--apple-gray-200);
+  border-top-color: var(--apple-gray-900);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-state {
+  .error-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 59, 48, 0.08);
+    color: var(--apple-red);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    color: var(--apple-gray-900);
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--apple-gray-500);
+    margin: 16px 0 24px;
+  }
+}
+
+.empty-state {
+  .empty-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    color: var(--apple-gray-900);
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--apple-gray-500);
+    margin-bottom: 24px;
+  }
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.item-card {
+  transition: all 0.2s ease;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--apple-card-bg);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.item-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.item-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: var(--apple-gray-100);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .item-card:hover & img {
+    transform: scale(1.03);
+  }
+
+  .item-status {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    background: rgba(52, 199, 89, 0.95);
+    color: white;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.item-info {
+  padding: 14px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+
+  .item-id {
+    font-size: 11px;
+    color: var(--apple-gray-400);
+    font-family: 'SF Mono', monospace;
+    background: var(--apple-gray-100);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .item-status {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(52, 199, 89, 0.12);
+    color: var(--apple-green);
+  }
+}
+
+.item-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--apple-gray-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-description {
+  color: var(--apple-gray-500);
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-price {
+  padding-top: 12px;
+  border-top: 1px solid var(--apple-gray-100);
+
+  .price-label {
+    display: block;
+    font-size: 10px;
+    color: var(--apple-gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+  }
+
+  .price-value {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--apple-gray-900);
+  }
+}

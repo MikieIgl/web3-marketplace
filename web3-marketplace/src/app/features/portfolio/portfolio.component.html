@@ -1,0 +1,62 @@
+<div class="portfolio-page fade-in">
+  @if (walletNotConnected()) {
+    <div class="connect-prompt">
+      <h2>Connect Wallet First</h2>
+      <p>Please connect your MetaMask wallet to view your portfolio</p>
+      <button class="btn btn-dark" (click)="connectWallet()">Connect Wallet</button>
+    </div>
+  } @else {
+    <div class="portfolio-header">
+      <h1>Portfolio</h1>
+      <p>Items you've collected from the marketplace</p>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading your items...</p>
+      </div>
+    } @else if (displayItems().length === 0) {
+      <div class="empty-state">
+        <h2>No items in portfolio</h2>
+        <p>Explore the marketplace and build your collection!</p>
+        <button class="btn btn-dark" routerLink="/marketplace">Browse Marketplace</button>
+      </div>
+    } @else {
+      <div class="portfolio-stats">
+        <div class="stat-item">
+          <span class="stat-value">{{ displayItems().length }}</span>
+          <span class="stat-label">Items Owned</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">Ξ {{ totalSpent() }}</span>
+          <span class="stat-label">Total Invested</span>
+        </div>
+      </div>
+
+      <div class="items-grid">
+        @for (item of displayItems(); track item.id) {
+          <div class="item-card" [routerLink]="['/product', item.id]">
+            <div class="item-image">
+              <img [src]="item.imageUrl" [alt]="item.name" />
+            </div>
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
+              <p class="item-desc">{{ item.description }}</p>
+              <div class="item-meta">
+                <span class="item-id">#{{ item.id }}</span>
+                <span class="item-price">{{ formatPrice(item.price) }} ETH</span>
+              </div>
+              @if (item.transactionDate) {
+                <div class="item-date">
+                  <span class="date-label">Purchased on</span>
+                  <span class="date-value">{{ formatDate(item.transactionDate) }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

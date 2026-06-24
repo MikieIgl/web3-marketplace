@@ -1,0 +1,33 @@
+<header class="main-header">
+  <div class="header-content">
+    <div class="header-title">
+      <h1 class="header-h1">Web3 Marketplace</h1>
+      <p class="header-subtitle">Discover and collect unique items</p>
+    </div>
+
+    <nav class="nav-links">
+      <a routerLink="/marketplace" routerLinkActive="active">Marketplace</a>
+      <a routerLink="/my-items" routerLinkActive="active">My Items</a>
+      <a routerLink="/sold" routerLinkActive="active">Sold</a>
+      <a routerLink="/portfolio" routerLinkActive="active">Portfolio</a>
+    </nav>
+
+    <div class="header-spacer"></div>
+
+    <button class="btn btn-create" routerLink="/sell">
+      <span class="btn-icon">+</span> Create Item
+    </button>
+
+    <app-wallet-button></app-wallet-button>
+  </div>
+</header>
+
+<main class="content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-content">
+    <p>&copy; 2026 Marketplace. Built on Ethereum.</p>
+  </div>
+</footer>

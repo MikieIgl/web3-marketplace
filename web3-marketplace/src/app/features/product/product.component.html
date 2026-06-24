@@ -1,0 +1,102 @@
+<div class="product-page fade-in">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading product details...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <span class="error-icon">!</span>
+      <h2>Product Not Found</h2>
+      <p>{{ error() }}</p>
+      <button class="btn btn-dark" routerLink="/marketplace">Back to Marketplace</button>
+    </div>
+  } @else if (displayProduct()) {
+    <div class="product-detail">
+      <div class="product-image-section">
+        <div class="image-wrapper">
+          <img [src]="displayProduct()!.imageUrl" [alt]="displayProduct()!.name" />
+        </div>
+      </div>
+
+      <div class="product-info-section">
+        <div class="product-header">
+          <span class="product-id">#{{ displayProduct()!.id }}</span>
+          @if (displayProduct()!.sold) {
+            <span class="status-badge sold">SOLD</span>
+          } @else {
+            <span class="status-badge">FOR SALE</span>
+          }
+        </div>
+
+        <h1 class="product-title">{{ displayProduct()!.name }}</h1>
+        <p class="product-description">{{ displayProduct()!.description }}</p>
+
+        <div class="price-section">
+          <span class="price-label">Price</span>
+          <span class="price-value">{{ formatPrice(displayProduct()!.price) }} ETH</span>
+        </div>
+
+        <div class="product-meta">
+          <div class="meta-item">
+            <span class="meta-label">Seller</span>
+            <a
+              [href]="getEtherscanUrl(displayProduct()!.seller)"
+              target="_blank"
+              class="meta-address"
+            >
+              {{ formatAddress(displayProduct()!.seller) }}
+              <span class="external-link">↗</span>
+            </a>
+          </div>
+
+          @if (
+            displayProduct()!.buyer &&
+            displayProduct()!.buyer !== '0x0000000000000000000000000000000000000000'
+          ) {
+            <div class="meta-item">
+              <span class="meta-label">Buyer</span>
+              <a
+                [href]="getEtherscanUrl(displayProduct()!.buyer)"
+                target="_blank"
+                class="meta-address"
+              >
+                {{ formatAddress(displayProduct()!.buyer) }}
+                <span class="external-link">↗</span>
+              </a>
+            </div>
+          }
+
+          <div class="meta-item">
+            <span class="meta-label">Contract</span>
+            <a
+              href="https://sepolia.etherscan.io/address/0x79ec3e60860EeBb331eEf6efcCD16Fa2b4Eb39c6"
+              target="_blank"
+              class="meta-address"
+            >
+              0x79ec...Eb39c6
+              <span class="external-link">↗</span>
+            </a>
+          </div>
+        </div>
+
+        @if (displayProduct()!.sold && displayProduct()!.transactionDate) {
+          <div class="transaction-date">
+            <span class="tx-label">Sold on</span>
+            <span class="tx-value">{{ formatDate(displayProduct()!.transactionDate) }}</span>
+          </div>
+        }
+
+        <div class="actions">
+          @if (displayProduct()!.sold) {
+            <button class="btn btn-sold" disabled>Sold Out</button>
+          } @else if (isOwner()) {
+            <button class="btn btn-sold" disabled>Your Item</button>
+          } @else {
+            <button class="btn btn-buy" (click)="buyItem()">Buy Now</button>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
