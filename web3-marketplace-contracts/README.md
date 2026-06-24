@@ -29,7 +29,7 @@ Solidity smart contracts for the decentralized marketplace.
 cd web3-marketplace-contracts
 npm install
 cp .env.example .env
-# Edit .env with your RPC URL and private key
+
 npm run compile
 npm run deploy        # Deploy to Sepolia
 npm run export-abi    # Export to frontend
@@ -38,13 +38,13 @@ npm run seed          # Add test items (optional)
 
 ## 📜 Commands
 
-| Command              | Description           |
-| -------------------- | --------------------- |
-| `npm run compile`    | Compile contracts     |
-| `npm run deploy`     | Deploy to Sepolia     |
-| `npm run seed`       | Add test data         |
-| `npm run export-abi` | Export ABI to frontend|
-| `npx hardhat node`   | Local Hardhat network |
+| Command              | Description            |
+| -------------------- | ---------------------- |
+| `npm run compile`    | Compile contracts      |
+| `npm run deploy`     | Deploy to Sepolia      |
+| `npm run seed`       | Add test data          |
+| `npm run export-abi` | Export ABI to frontend |
+| `npx hardhat node`   | Local Hardhat network  |
 
 ## 📁 Structure
 
@@ -82,12 +82,12 @@ struct Item {
 
 ### Functions
 
-| Function            | Description      |
-| ------------------- | ---------------- |
-| `listItem(...)`     | Create listing   |
-| `buyItem(id)`       | Purchase item    |
-| `getAllItems()`     | Get all items    |
-| `getItemsByBuyer()` | Get buyer's items|
+| Function            | Description       |
+| ------------------- | ----------------- |
+| `listItem(...)`     | Create listing    |
+| `buyItem(id)`       | Purchase item     |
+| `getAllItems()`     | Get all items     |
+| `getItemsByBuyer()` | Get buyer's items |
 
 ### Events
 
@@ -127,8 +127,8 @@ export default {
 
 ## 📊 Deployment
 
-| Date       | Network | Address                                    |
-| ---------- | ------- | ------------------------------------------ |
+| Date       | Network | Address                                      |
+| ---------- | ------- | -------------------------------------------- |
 | 2026-06-24 | Sepolia | `0x79ec3e60860EeBb331eEf6efcCD16Fa2b4Eb39c6` |
 
 ## 🔗 Frontend Integration
