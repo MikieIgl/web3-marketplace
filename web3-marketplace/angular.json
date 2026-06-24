@@ -31,7 +31,7 @@
               }
             ],
             "styles": ["src/styles.less"],
-            "baseHref": "/"
+            "baseHref": "/web3-marketplace/"
           },
           "configurations": {
             "production": {
